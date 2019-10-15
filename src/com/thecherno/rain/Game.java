@@ -1,13 +1,16 @@
 package com.thecherno.rain;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
-		
+
 	public static int WIDHT = 300;
 	public static int HEIGHT = WIDHT / 16 * 9;
 	public static int SCALE = 3;
@@ -19,7 +22,7 @@ public class Game extends Canvas implements Runnable {
 	public Game() {
 		Dimension size = new Dimension(WIDHT * SCALE, HEIGHT * SCALE);
 		setPreferredSize(size);
-		
+
 		frame = new JFrame();
 	}
 
@@ -42,10 +45,29 @@ public class Game extends Canvas implements Runnable {
 	@Override
 	public void run() {
 		while (running) {
-			System.out.println("Runing....");
+			update();
+			render();
 		}
 	}
-	
+
+	public void update() {
+
+	}
+
+	public void render() {
+		BufferStrategy bs = getBufferStrategy();
+		if (bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
+		
+		Graphics g = bs.getDrawGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		g.dispose();
+		bs.show();
+	}
+
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.frame.setResizable(false);
@@ -55,11 +77,9 @@ public class Game extends Canvas implements Runnable {
 		game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.frame.setLocationRelativeTo(null);
 		game.frame.setVisible(true);
-		
-		
+
 		game.start();
-		
-		
+
 	}
 
 }
