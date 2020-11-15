@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 
 import com.thecherno.rain.graphics.Screen;
 import com.thecherno.rain.input.Keyboard;
+import com.thecherno.rain.level.Level;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
@@ -23,6 +24,7 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private JFrame frame;
 	private Keyboard key;
+	private Level level;
 	private boolean running = false;
 
 	private Screen screen;
@@ -35,9 +37,9 @@ public class Game extends Canvas implements Runnable {
 		setPreferredSize(size);
 		
 		screen = new Screen(WIDHT, HEIGHT);
-		frame = new JFrame();
-		
+		frame = new JFrame();		
 		key = new Keyboard();
+		level = new Level(64, 64);
 		
 		addKeyListener(key);
 
@@ -110,9 +112,8 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 
-		screen.clear();
-
-		screen.render(x,y);
+		screen.clear();		
+		level.render(x, y, screen);
 
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];

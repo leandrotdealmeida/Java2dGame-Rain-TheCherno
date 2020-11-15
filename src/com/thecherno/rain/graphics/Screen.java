@@ -31,19 +31,7 @@ public class Screen {
 			pixels[i] = 0;
 		}
 	}
-
-	public void render(int xOffSet, int yOffSet) {		
-		for (int y = 0; y < height; y++) {
-			int yp = y + yOffSet;
-			if(yp < 0 || yp >= height) continue;
-			for (int x = 0; x < width; x++) {
-				int xp = x + xOffSet;
-				if(xp < 0 || xp >= width) continue;
-				pixels[(xp) + (yp) * width] = Sprite.grass.pixels[(x & 15) + (y & 15) * 16];
-			}
-		}
-		
-	}
+	
 	
 	public void renderTile(int xp, int yp, Tile tile) {
 		xp -= xOffset;
